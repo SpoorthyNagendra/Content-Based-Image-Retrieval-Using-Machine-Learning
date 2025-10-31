@@ -14,33 +14,77 @@ This application helps researchers, digital asset managers, and computer vision 
 - **Visual Results**: Clear display of query results with similarity metrics
 - **Modular Design**: Well-structured codebase for easy maintenance and extensions
 
-## Architecture
+## Implementation Architecture
+
 <pre>
 ```text
-           ┌────────────┐
-           │    User    │
-           │  Interface │
-           └─────┬──────┘
-                 │
-                 ▼
-         ┌───────────────────┐        ┌───────────────┐
-         │  Image Processing │───────▶│ Feature       │
-         │     Pipeline     │        │ Extraction    │
-         └────────┬──────────┘        └───────┬───────┘
-                  │                           │
-                  ▼                           ▼
-         ┌────────────────────┐        ┌──────────────────┐
-         │  Training Module   │◄───────┤ Bag of Features  │
-         │                    │        │    Generator      │
-         └────────┬───────────┘        └──────────────────┘
-                  │
-                  ▼
-         ┌────────────────────┐        ┌────────────────┐
-         │  Image Database    │◄───────┤  Similarity    │
-         │    Management      │        │   Matching     │
-         └────────────────────┘        └────────────────┘
+           ┌─────────────────┐
+           │  Input Database │
+           └────────┬────────┘
+                    │
+                    ▼
+           ┌─────────────────┐
+           │  Pre-Processing │
+           └────────┬────────┘
+                    │
+                    ▼
+           ┌─────────────────┐        ┌──────────────┐
+           │   CNN/DCNN      │───────▶│  Knowledge   │
+           │   Training      │        │    Base      │
+           └────────┬────────┘        └──────────────┘
+                    │                        ▲
+                    │                        │
+           ┌────────┴────────┐              │
+           │  Input Query    │              │
+           │    Image        │              │
+           └────────┬────────┘              │
+                    │                        │
+                    ▼                        │
+           ┌─────────────────┐              │
+           │  Pre-Processing │              │
+           └────────┬────────┘              │
+                    │                        │
+                    ▼                        │
+           ┌─────────────────┐              │
+           │ Query Matching  │──────────────┘
+           │     & Score     │
+           │  Calculation    │
+           └────────┬────────┘
+                    │
+                    ▼
+           ┌─────────────────┐
+           │   Select Top    │
+           │   N Images      │
+           └────────┬────────┘
+                    │
+                    ▼
+           ┌─────────────────┐
+           │ Display Results │
+           └─────────────────┘
 ```
 </pre>
+
+The system follows a comprehensive image retrieval pipeline:
+
+1. **Input Processing**
+   - Image database ingestion
+   - Pre-processing of training images
+   - CNN/DCNN training for feature extraction
+
+2. **Query Processing**
+   - Input query image handling
+   - Pre-processing for consistency
+   - Feature extraction for matching
+
+3. **Matching Engine**
+   - Query matching algorithms
+   - Score calculation for similarity
+   - Ranking of results
+
+4. **Result Generation**
+   - Selection of top N matches
+   - Display of retrieved images
+   - Content-based result presentation
 
 ## Project Structure
 ```
@@ -173,7 +217,8 @@ This project was developed as part of an undergraduate team project with 4 membe
 
 - **Spoorthy Nagendra** - *Machine Learning Implementation*
   - Implemented the feature extraction algorithms using MATLAB
-  - Worked on the Bag of Features (BoF) implementation
+  - Developed query matching and score calculation modules
+  - Worked on CNN/DCNN training integration
   - Contributed to system testing and documentation
   - Collaborated with team members on integration and debugging
 
